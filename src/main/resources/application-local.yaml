@@ -24,3 +24,11 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: auth-service
     enabled: true
+
+jwt:
+  secret-key: co7IB8BVZ2ZCWoyjnKbrX4ByykVOvY38vtv2DNK9kN4=
+  expire-time-access-token: 900000
+  expire-time-refresh-token: 3
+
+scheduling:
+  fixed-rate: 900000

@@ -1,5 +1,6 @@
 package db.shield.auth.service.mapper;
 
+
 import db.shield.auth.service.dto.user.UserCreateRequest;
 import db.shield.auth.service.dto.user.UserResponse;
 import db.shield.auth.service.dto.user.UserUpdateRequest;
@@ -9,6 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

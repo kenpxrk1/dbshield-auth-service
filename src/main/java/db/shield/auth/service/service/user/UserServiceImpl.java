@@ -1,5 +1,6 @@
 package db.shield.auth.service.service.user;
 
+
 import db.shield.auth.service.dto.user.UserCreateRequest;
 import db.shield.auth.service.dto.user.UserResponse;
 import db.shield.auth.service.dto.user.UserUpdateRequest;
@@ -9,21 +10,26 @@ import db.shield.auth.service.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
     public void createUser(UserCreateRequest userDto) {
         log.info("Creating user with username: {}", userDto.username());
         UserEntity user = userMapper.toEntity(userDto);
+        user.setPasswordHash(passwordEncoder.encode(userDto.password()));
         user = userRepository.save(user);
         log.info("User with id {} successfully created at {}", user.getId(), user.getCreatedAt());
     }

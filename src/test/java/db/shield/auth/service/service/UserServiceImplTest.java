@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -28,6 +29,10 @@ class UserServiceImplTest extends Initializer {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -36,9 +41,15 @@ class UserServiceImplTest extends Initializer {
         when(userRepository.save(any(UserEntity.class)))
                 .thenReturn(userEntity);
 
+        when(passwordEncoder.encode(any(CharSequence.class)))
+                .thenReturn("hashedPassword");
+
+
         userService.createUser(userCreateRequest);
 
         verify(userRepository).save(any(UserEntity.class));
+        verify(passwordEncoder).encode(userCreateRequest.password());
+
     }
 
     @Test

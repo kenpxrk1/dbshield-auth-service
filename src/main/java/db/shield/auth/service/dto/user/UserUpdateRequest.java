@@ -1,8 +1,10 @@
 package db.shield.auth.service.dto.user;
 
+
 import db.shield.auth.service.model.constant.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
+
 
 public record UserUpdateRequest(
 
