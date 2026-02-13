@@ -1,5 +1,6 @@
 package db.shield.auth.service.mapper;
 
+
 import db.shield.auth.service.Initializer;
 import db.shield.auth.service.dto.user.UserResponse;
 import db.shield.auth.service.model.UserEntity;

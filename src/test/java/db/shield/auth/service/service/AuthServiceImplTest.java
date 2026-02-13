@@ -45,19 +45,14 @@ class AuthServiceImplTest extends Initializer {
 
     @Mock
     private AuthenticationManager authManager;
-
     @Mock
     private JWTService jwtService;
-
     @Mock
     private TokenRepository tokenRepository;
-
     @Spy
     private AuthMapper authMapper = new AuthMapperImpl();
-
     @InjectMocks
     private AuthServiceImpl authService;
-
     private static final String PASSWORD = "password123";
     private static final String ACCESS_TOKEN = "access-token";
     private static final UUID REFRESH_TOKEN = UUID.randomUUID();
@@ -66,7 +61,6 @@ class AuthServiceImplTest extends Initializer {
     void setUp() {
         ReflectionTestUtils.setField(authService, "expireTime", 1L);
     }
-
 
     @Test
     void login_success() {

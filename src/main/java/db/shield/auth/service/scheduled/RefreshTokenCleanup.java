@@ -15,6 +15,7 @@ import java.time.OffsetDateTime;
 @Component
 @RequiredArgsConstructor
 public class RefreshTokenCleanup {
+
     private final TokenRepository tokenRepository;
 
     @Scheduled(fixedRateString = "${scheduling.fixed-rate}")
