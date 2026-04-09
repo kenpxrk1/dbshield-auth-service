@@ -1,6 +1,7 @@
 package db.shield.auth.service.service;
 
 
+import db.shield.auth.lib.security.JWTService;
 import db.shield.auth.service.Initializer;
 import db.shield.auth.service.dto.auth.LoginRequest;
 import db.shield.auth.service.dto.auth.LoginResponse;
@@ -14,7 +15,7 @@ import db.shield.auth.service.model.TokenEntity;
 import db.shield.auth.service.repository.TokenRepository;
 import db.shield.auth.service.repository.UserRepository;
 import db.shield.auth.service.service.auth.AuthServiceImpl;
-import db.shield.auth.service.service.auth.jwt.JWTService;
+
 import db.shield.auth.service.util.security.details.CustomUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
