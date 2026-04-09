@@ -1,7 +1,8 @@
 package db.shield.auth.service.util.security;
 
 
-import db.shield.auth.service.service.auth.jwt.JWTService;
+import db.shield.auth.lib.security.JWTService;
+import db.shield.auth.lib.security.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

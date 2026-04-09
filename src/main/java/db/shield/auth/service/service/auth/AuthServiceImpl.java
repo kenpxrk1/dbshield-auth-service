@@ -1,6 +1,7 @@
 package db.shield.auth.service.service.auth;
 
 
+import db.shield.auth.lib.security.JWTService;
 import db.shield.auth.service.dto.auth.LoginRequest;
 import db.shield.auth.service.dto.auth.LoginResponse;
 import db.shield.auth.service.dto.auth.RefreshTokenRequest;
@@ -12,7 +13,6 @@ import db.shield.auth.service.model.TokenEntity;
 import db.shield.auth.service.model.UserEntity;
 import db.shield.auth.service.repository.TokenRepository;
 import db.shield.auth.service.repository.UserRepository;
-import db.shield.auth.service.service.auth.jwt.JWTService;
 import db.shield.auth.service.util.security.details.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
