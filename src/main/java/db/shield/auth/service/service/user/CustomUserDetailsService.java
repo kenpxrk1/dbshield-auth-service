@@ -4,7 +4,6 @@ package db.shield.auth.service.service.user;
 import db.shield.auth.service.model.UserEntity;
 import db.shield.auth.service.repository.UserRepository;
 import db.shield.auth.service.util.security.details.CustomUserDetails;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         log.debug("Getting user with username: {}", username);
         UserEntity user = userRepository.findByUsername(username).orElseThrow(
-                () -> new EntityNotFoundException("User with username " + username + "not found.")
+                () -> new UsernameNotFoundException("User with username " + username + " not found.")
         );
         return new CustomUserDetails(user);
     }

@@ -1,14 +1,14 @@
 server:
-  port: 8080
+  port: 8880
 
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/db-shield
-    username: postgres
-    password: root-password-123
+    url: jdbc:postgresql://localhost:5432/dbshield
+    username: dbshield
+    password: dbshield
     hikari:
-      schema: auth-service
+      schema: auth_service
 
   jpa:
     hibernate:
@@ -17,12 +17,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: auth-service
+        default_schema: auth_service
     open-in-view: false
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
-    default-schema: auth-service
+    default-schema: auth_service
     enabled: true
 
 jwt:

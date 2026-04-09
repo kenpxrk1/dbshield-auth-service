@@ -40,7 +40,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid request body"),
             @ApiResponse(responseCode = "409", description = "User already exists")
     })
-    @PreAuthorize("hasRole('READ_WRITE')")
+    @PreAuthorize("@bootstrapAuthorizationService.canCreateUser(authentication)")
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody @Valid UserCreateRequest createRequest) {
         userService.createUser(createRequest);

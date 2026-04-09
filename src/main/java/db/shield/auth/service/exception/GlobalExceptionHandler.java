@@ -4,6 +4,8 @@ package db.shield.auth.service.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,6 +26,20 @@ public class GlobalExceptionHandler {
         ErrorResponse response = new ErrorResponse(e.getMessage());
         log.error(e.getMessage(), e);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    private ResponseEntity<ErrorResponse> handleException(BadCredentialsException e) {
+        ErrorResponse response = new ErrorResponse("Invalid username or password");
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(LockedException.class)
+    private ResponseEntity<ErrorResponse> handleException(LockedException e) {
+        ErrorResponse response = new ErrorResponse("User account is locked");
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(response, HttpStatus.LOCKED);
     }
 
     @ExceptionHandler(Exception.class)

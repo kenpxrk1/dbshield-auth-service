@@ -12,6 +12,7 @@ import db.shield.auth.service.mapper.AuthMapper;
 import db.shield.auth.service.mapper.AuthMapperImpl;
 import db.shield.auth.service.model.TokenEntity;
 import db.shield.auth.service.repository.TokenRepository;
+import db.shield.auth.service.repository.UserRepository;
 import db.shield.auth.service.service.auth.AuthServiceImpl;
 import db.shield.auth.service.service.auth.jwt.JWTService;
 import db.shield.auth.service.util.security.details.CustomUserDetails;
@@ -49,6 +50,8 @@ class AuthServiceImplTest extends Initializer {
     private JWTService jwtService;
     @Mock
     private TokenRepository tokenRepository;
+    @Mock
+    private UserRepository userRepository;
     @Spy
     private AuthMapper authMapper = new AuthMapperImpl();
     @InjectMocks
@@ -71,13 +74,15 @@ class AuthServiceImplTest extends Initializer {
                 new UsernamePasswordAuthenticationToken(userDetails, null);
 
         when(authManager.authenticate(any())).thenReturn(authentication);
-        when(jwtService.generateAccessToken(any(), any())).thenReturn(ACCESS_TOKEN);
+        when(jwtService.generateAccessToken(any(), any(), any())).thenReturn(ACCESS_TOKEN);
+        when(userRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(tokenRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
         LoginResponse response = authService.login(request);
 
         verify(authManager).authenticate(any());
-        verify(jwtService).generateAccessToken(USERNAME, userEntity.getRole().name());
+        verify(jwtService).generateAccessToken(USERNAME, userEntity.getEmail(), userEntity.getRole().name());
+        verify(userRepository).save(any());
         verify(tokenRepository).save(any(TokenEntity.class));
 
         assertNotNull(response);
@@ -98,7 +103,8 @@ class AuthServiceImplTest extends Initializer {
         when(tokenRepository.findByRefreshToken(existingToken))
                 .thenReturn(Optional.of(tokenEntity));
 
-        when(jwtService.generateAccessToken(any(), any()))
+        when(tokenRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+        when(jwtService.generateAccessToken(any(), any(), any()))
                 .thenReturn(ACCESS_TOKEN);
 
         RefreshTokenRequest request = new RefreshTokenRequest(existingToken);
@@ -106,7 +112,8 @@ class AuthServiceImplTest extends Initializer {
         RefreshTokenResponse response = authService.refreshToken(request);
 
         verify(tokenRepository).findByRefreshToken(existingToken);
-        verify(jwtService).generateAccessToken(USERNAME, userEntity.getRole().name());
+        verify(tokenRepository).save(any(TokenEntity.class));
+        verify(jwtService).generateAccessToken(USERNAME, userEntity.getEmail(), userEntity.getRole().name());
 
         assertNotNull(response);
         assertEquals(ACCESS_TOKEN, response.accessToken());
@@ -165,4 +172,3 @@ class AuthServiceImplTest extends Initializer {
                 () -> authService.refreshToken(request));
     }
 }
-
