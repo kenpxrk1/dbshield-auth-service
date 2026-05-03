@@ -70,7 +70,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public RefreshTokenResponse refreshToken(final RefreshTokenRequest refreshDto) {
         log.info("refreshing token");
-        TokenEntity tokenToRefresh = tokenRepository.findByRefreshToken(refreshDto.refreshToken()).orElseThrow(() -> new EntityNotFoundException("Token '" + refreshDto.refreshToken() + "' is invalid"));
+        TokenEntity tokenToRefresh = tokenRepository.findByRefreshToken(refreshDto.refreshToken()).orElseThrow(
+                () -> new EntityNotFoundException("Token '" + refreshDto.refreshToken() + "' is invalid"));
 
         if (tokenToRefresh.isRevoked() || tokenToRefresh.getExpireTime().isBefore(OffsetDateTime.now())) {
             throw new AuthenticationException("Refresh token expired or revoked");
